@@ -41,11 +41,29 @@ const MyCardsPage = () => {
         });
       });
   }, []);
-  const handleDeleteCard = (_id) => {
-    setDataFromServer((dataFromServerCopy) =>
-      dataFromServerCopy.filter((card) => card._id !== _id)
-    );
+
+  const handleDeleteCard = async (_id) => {
+    try {
+      const { data } = await axios.delete(
+        "https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/" + _id
+      );
+      setDataFromServer((dataFromServerCopy) =>
+        dataFromServerCopy.filter((card) => card._id !== _id)
+      );
+    } catch (err) {
+      toast.error(err.response.data, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   };
+
   const handleEditCard = (_id) => {
     navigate(`${ROUTES.EDITCARD}/${_id}`);
   };

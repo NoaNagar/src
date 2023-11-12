@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
 import homePageNormalization from "./homePageNormalization";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useQueryParams from "../../hooks/useQueryParams";
 import { toast } from "react-toastify";
+import { addLikedCard } from "../../store/likedCards";
+import { getToken } from "../../service/storageService";
 // import CircularIndeterminate from "../../components/loading";
 
 let initialDataFromServer = [];
@@ -17,6 +19,8 @@ const HomePage = () => {
   const navigate = useNavigate();
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
   const query = useQueryParams();
+  const dispatch = useDispatch();
+  let token = getToken();
   useEffect(() => {
     axios
       .get("/cards")
@@ -51,6 +55,9 @@ const HomePage = () => {
       const { data } = await axios.delete(
         "https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/" + _id
       );
+      setDataFromServer((dataFromServerCopy) =>
+        dataFromServerCopy.filter((card) => card._id !== _id)
+      );
     } catch (err) {
       toast.error(err.response.data, {
         position: "top-right",
@@ -66,6 +73,27 @@ const HomePage = () => {
   };
   const handleEditCard = (_id) => {
     navigate(`${ROUTES.EDITCARD}/${_id}`);
+  };
+  const handleFavIcon = async (_id, like) => {
+    try {
+      const response = await axios.patch(
+        `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${_id}`,
+        {
+          like: !like,
+        },
+        {
+          headers: {
+            "x-auth-token": `${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        dispatch(addLikedCard({ _id, like: !like }));
+      }
+    } catch (error) {
+      console.error("Error updating like status:", error);
+    }
   };
 
   return (
@@ -92,6 +120,7 @@ const HomePage = () => {
               cardNumber={card.cardNumber}
               onDeleteCard={handleDeleteCard}
               onEditCard={handleEditCard}
+              onFavCard={handleFavIcon}
             />
           </Grid>
         ))}

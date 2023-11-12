@@ -3,21 +3,20 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import { Switch } from "@mui/material";
+import { Avatar, Switch } from "@mui/material";
 import Links from "./ui/Links";
 import LeftDrawerComponent from "./ui/LeftDrawerComponent";
 import { useState } from "react";
 import FilterComponent from "./ui/FilterComponent";
-import { getToken } from "../../service/storageService";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -26,7 +25,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const loggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
-  const saveTheme = useSelector((bigPie) => bigPie.darkThemeSlice.saveTheme);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -42,9 +40,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const handleThemeChange = (event) => {
-    if (saveTheme) {
-      isDarkTheme = true;
-    }
     onThemeChange(event.target.checked);
   };
   const handleOpenDrawerClick = () => {
@@ -130,20 +125,12 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            LOGO
-          </Typography>
           <Links />
           <FilterComponent />
           <Box sx={{ my: 2, p: 1 }}>
-            <Typography sx={{ display: { xs: "none", md: "inline" } }}>
+            {/* <Typography sx={{ display: { xs: "none", md: "inline" } }}>
               {isDarkTheme ? "Dark" : "Light"} Mode
-            </Typography>
+            </Typography> */}
             <Switch checked={isDarkTheme} onChange={handleThemeChange} />
           </Box>
           <Box sx={{ flexGrow: 1 }} />
@@ -158,7 +145,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <AccountCircle />
+                <Avatar alt="profile" src="" />
               </IconButton>
             )}
           </Box>
@@ -172,7 +159,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <Avatar alt="profile" src="" />
               </IconButton>
             )}
           </Box>

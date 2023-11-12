@@ -12,7 +12,7 @@ import axios from "axios";
 import { normalizeData } from "./normalizeData";
 import { validateRegister } from "../../validation/registerValidation";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 
 const RegisterPage = () => {
@@ -45,10 +45,8 @@ const RegisterPage = () => {
       const errors = validateRegister(inputsValue);
       if (errors) return;
       let request = normalizeData(inputsValue);
-      const { data } = await axios.post(
-        "https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users"
-      );
-      toast("You have successfully registered 👍", {
+      const { data } = await axios.post("/users", request);
+      toast("The registration was successful ", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -110,7 +108,6 @@ const RegisterPage = () => {
               fullWidth
               id="middle"
               label="Middle Name"
-              autoFocus
               value={inputsValue.middle}
               onChange={handleInputsChange}
             />

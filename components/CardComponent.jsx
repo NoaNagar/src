@@ -18,7 +18,7 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
-
+import { hover } from "@testing-library/user-event/dist/hover";
 const CardComponent = ({
   _id,
   title,
@@ -37,6 +37,7 @@ const CardComponent = ({
   cardNumber,
   onDeleteCard,
   onEditCard,
+  onFavCard,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const loggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
@@ -52,10 +53,12 @@ const CardComponent = ({
   const handleClickEditCard = () => {
     onEditCard(_id);
   };
-  const myCardPage = false;
-  if (search.pathname === "/mycard") {
-    myCardPage = true;
-  }
+  const [liked, setLiked] = useState(like);
+  const handleClickFavCard = () => {
+    onFavCard(_id, liked);
+    setLiked((prevLiked) => !prevLiked); // Toggle the liked state
+  };
+
   return (
     <Card>
       <CardActionArea>
@@ -63,7 +66,7 @@ const CardComponent = ({
           component="img"
           image={img}
           alt={alt}
-          sx={{ height: "170px" }}
+          sx={{ height: "200px" }}
         />
       </CardActionArea>
       <CardContent>
@@ -149,17 +152,17 @@ const CardComponent = ({
         </Box>
         <Box display="flex" justifyContent="space-between" sx={{ mt: 2 }}>
           <Box>
-            <IconButton>
+            <IconButton className="phoneIcon" color={hover ? "#74d175" : ""}>
               <PhoneIcon />
             </IconButton>
-            {myCardPage && (
+            {search.pathname === "/mycards" && (
               <IconButton onClick={handleClickEditCard}>
                 <CreateIcon />
               </IconButton>
             )}
           </Box>
           <Box>
-            {myCardPage && (
+            {search.pathname === "/mycards" && (
               <IconButton onClick={handleDeleteCardClick}>
                 <DeleteIcon />
               </IconButton>
@@ -170,15 +173,22 @@ const CardComponent = ({
               </IconButton>
             )}
             {loggedIn && (
-              <IconButton>
-                <FavoriteIcon color={like ? "favActive" : "black"} />
+              <IconButton
+                onClick={handleClickFavCard}
+                color={liked ? "favActive" : ""}
+              >
+                <FavoriteIcon />
               </IconButton>
             )}
           </Box>
         </Box>
       </CardContent>
-      <Button size="small" sx={{ ml: "10px", mb: "10px" }} onClick={toggleCard}>
-        {isOpen ? "close" : "learn more"}
+      <Button
+        size="large"
+        sx={{ fontSize: "1.5em", borderRadius: "50%" }}
+        onClick={toggleCard}
+      >
+        {isOpen ? "×" : "+"}
       </Button>
     </Card>
   );
@@ -191,7 +201,7 @@ CardComponent.propTypes = {
   address: PropTypes.string,
   img: PropTypes.string,
   alt: PropTypes.string,
-  // like: PropTypes.bool,
+  like: PropTypes.bool,
   cardNumber: PropTypes.number,
   onDeleteCard: PropTypes.func.isRequired,
   onEditCard: PropTypes.func.isRequired,

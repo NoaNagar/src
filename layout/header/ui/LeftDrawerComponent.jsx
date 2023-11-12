@@ -5,6 +5,7 @@ import {
   ListItemButton,
   ListItemText,
   Drawer,
+  Divider,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import myLinks, {
@@ -20,62 +21,78 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
   const isBuisness = useSelector((bigPie) => bigPie.authSlice.isBuisness);
   const list = () => (
     <Box
-      sx={{ width: { auto: 250 } }}
+      sx={{
+        width: { auto: 250 },
+        height: "100vw",
+      }}
       role="presentation"
       onClick={onCloseDrawer}
       onKeyDown={onCloseDrawer}
     >
       <List>
         {alwaysLinks.map((myItem, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton>
-              <Link to={myItem.to}>
-                <ListItemText primary={myItem.children} sx={{ pl: 2, pr: 2 }} />
-              </Link>
-            </ListItemButton>
-          </ListItem>
+          <Box key={index}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <Link to={myItem.to}>
+                  <ListItemText
+                    primary={myItem.children}
+                    sx={{ pl: 2, pr: 2 }}
+                  />
+                </Link>
+              </ListItemButton>
+            </ListItem>
+            <Divider />
+          </Box>
         ))}
         {loggedIn &&
           loggedInLinks.map((myItem, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton>
-                <Link to={myItem.to}>
-                  <ListItemText
-                    primary={myItem.children}
-                    sx={{ pl: 2, pr: 2 }}
-                  />
-                </Link>
-              </ListItemButton>
-            </ListItem>
+            <Box key={index}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <Link to={myItem.to}>
+                    <ListItemText
+                      primary={myItem.children}
+                      sx={{ pl: 2, pr: 2 }}
+                    />
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+            </Box>
           ))}
         {!loggedIn &&
           loggedOutLinks.map((myItem, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton>
-                <Link to={myItem.to}>
-                  <ListItemText
-                    primary={myItem.children}
-                    sx={{ pl: 2, pr: 2 }}
-                  />
-                </Link>
-              </ListItemButton>
-            </ListItem>
+            <Box key={index}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <Link to={myItem.to}>
+                    <ListItemText
+                      primary={myItem.children}
+                      sx={{ pl: 2, pr: 2 }}
+                    />
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+            </Box>
           ))}
         {isBuisness &&
           businessInLinks.map((myItem, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton>
-                <Link to={myItem.to}>
-                  <ListItemText
-                    primary={myItem.children}
-                    sx={{ pl: 2, pr: 2 }}
-                  />
-                </Link>
-              </ListItemButton>
-            </ListItem>
+            <Box key={index}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <Link to={myItem.to}>
+                    <ListItemText
+                      primary={myItem.children}
+                      sx={{ pl: 2, pr: 2 }}
+                    />
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+            </Box>
           ))}
-        {/* <ListItemIcon>
-              </ListItemIcon> */}
       </List>
     </Box>
   );

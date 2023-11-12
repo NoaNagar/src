@@ -2,7 +2,6 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { getToken } from "../../service/storageService";
 import { useSelector } from "react-redux";
 
 const MyProrifile = () => {
@@ -13,8 +12,7 @@ const MyProrifile = () => {
     axios
       .get(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/${id}`)
       .then(({ data }) => {
-        const newData = data;
-        setUserFromServer(newData);
+        setUserFromServer(data);
       })
       .catch((err) => {
         toast.error(err, {
@@ -29,7 +27,6 @@ const MyProrifile = () => {
         });
       });
   }, []);
-
   return (
     <Container sx={{ mt: 12 }}>
       <Typography variant="h2" noWrap component="div">

@@ -11,7 +11,7 @@ import CreateCardPage from "../pages/CreateCardPage/CreateCardPage";
 import AuthGuard from "../Guard/AuthGuard";
 import BizGuard from "../Guard/BizGuard";
 import AboutPageComponent from "../pages/aboutPage/AboutPageComponent";
-import { FavPageComponent } from "../pages/FavPage/FavPageComponent";
+import FavPageComponent from "../pages/FavPage/FavPageComponent";
 import MyCardsPage from "../pages/myCards/MyCardsPage";
 import MyProrifile from "../pages/MyProfile/MyProrifile";
 import EditProfile from "../pages/MyProfile/EditProfile";

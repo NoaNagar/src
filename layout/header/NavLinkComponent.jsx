@@ -3,11 +3,11 @@ import { NavLink } from "react-router-dom";
 
 const NavLinkComponent = ({ to, children }) => {
   return (
-    <NavLink to={to}>
+    <NavLink to={to} sx={{}}>
       {({ isActive }) => (
         <Typography
           color={isActive ? "text.headerActive" : "text.headerColor"}
-          sx={{ p: 2 }}
+          sx={{ p: 2, underline: "none" }}
           variant="h6"
         >
           {children}
