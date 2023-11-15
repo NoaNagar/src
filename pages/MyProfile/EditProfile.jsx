@@ -1,6 +1,6 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -27,7 +27,38 @@ const EditProfile = () => {
   });
   const [userFromServer, setUserFromServer] = useState({});
   const id = useSelector((bigPie) => bigPie.authSlice.id);
+  const userData = useSelector((bigPie) => bigPie.authSlice.userData);
+  console.log(userData);
   const navigate = useNavigate();
+
+  let input = useRef(null);
+
+  useEffect(() => {
+    axios
+      .get(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/${id}`)
+      .then(({ data }) => {
+        setUserFromServer(data);
+        setUserFromServer((old) => {
+          return {
+            ...old,
+            first: input.current.value,
+          };
+        });
+      })
+      .catch((err) => {
+        toast.error(err, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  }, []);
+  console.log(userFromServer?.name?.first);
 
   const handleInputsChange = (e) => {
     setInputsValue((currentState) => ({
@@ -42,10 +73,12 @@ const EditProfile = () => {
       const errors = validateRegister(inputsValue);
       if (errors) return;
       let request = normalizeData(inputsValue);
-      axios.put(
+      await axios.put(
         `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/${id}`,
         request
       );
+      console.log(event);
+
       toast.success("The user has been updated successfully!", {
         position: "top-center",
         autoClose: 5000,
@@ -70,6 +103,8 @@ const EditProfile = () => {
       });
     }
   };
+
+  console.log(userFromServer?.name?.first);
   return (
     <Container sx={{ mt: 12 }}>
       <Typography variant="h3">Edit your profile</Typography>
@@ -79,16 +114,16 @@ const EditProfile = () => {
           id="firstName"
           variant="outlined"
           label="First name*"
-          autoFocus
-          value={inputsValue.first}
+          value={`${userFromServer?.name?.first}`}
           onChange={handleInputsChange}
+          ref={input}
         />
         <TextField
           sx={{ mt: 2 }}
           id="middleName"
           variant="outlined"
           label="Middle name"
-          value={inputsValue.middle}
+          defaultValue={`${userFromServer?.name?.middle}`}
           onChange={handleInputsChange}
         />
         <TextField
@@ -96,7 +131,7 @@ const EditProfile = () => {
           id="lastName"
           variant="outlined"
           label="Last name*"
-          value={inputsValue.last}
+          defaultValue={`${userFromServer?.name?.last}`}
           onChange={handleInputsChange}
         />
         <TextField
@@ -104,15 +139,7 @@ const EditProfile = () => {
           id="phone"
           variant="outlined"
           label="Phone*"
-          value={inputsValue.phone}
-          onChange={handleInputsChange}
-        />
-        <TextField
-          sx={{ mt: 2 }}
-          id="email"
-          variant="outlined"
-          label="Email*"
-          value={inputsValue.email}
+          defaultValue={`${userFromServer?.phone}`}
           onChange={handleInputsChange}
         />
         <TextField
@@ -120,7 +147,7 @@ const EditProfile = () => {
           id="country"
           variant="outlined"
           label="Country*"
-          value={inputsValue.country}
+          defaultValue={`${userFromServer?.address?.country}`}
           onChange={handleInputsChange}
         />
         <TextField
@@ -128,7 +155,7 @@ const EditProfile = () => {
           id="city"
           variant="outlined"
           label="City*"
-          value={inputsValue.city}
+          defaultValue={`${userFromServer?.address?.city}`}
           onChange={handleInputsChange}
         />
         <TextField
@@ -136,7 +163,7 @@ const EditProfile = () => {
           id="state"
           variant="outlined"
           label="State"
-          value={inputsValue.state}
+          defaultValue={`${userFromServer?.address?.state}`}
           onChange={handleInputsChange}
         />
         <TextField
@@ -144,7 +171,7 @@ const EditProfile = () => {
           id="street"
           variant="outlined"
           label="Street*"
-          value={inputsValue.street}
+          defaultValue={`${userFromServer?.address?.street}`}
           onChange={handleInputsChange}
         />
         <TextField
@@ -152,7 +179,7 @@ const EditProfile = () => {
           id="houseName"
           variant="outlined"
           label="House number"
-          value={inputsValue.houseNumber}
+          defaultValue={`${userFromServer?.address?.houseNumber}`}
           onChange={handleInputsChange}
         />
         <TextField
@@ -160,7 +187,7 @@ const EditProfile = () => {
           id="zip"
           variant="outlined"
           label="Zip*"
-          value={inputsValue.zip}
+          defaultValue={`${userFromServer?.address?.zip}`}
           onChange={handleInputsChange}
         />
       </Box>

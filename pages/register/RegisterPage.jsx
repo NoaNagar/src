@@ -14,6 +14,7 @@ import { validateRegister } from "../../validation/registerValidation";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
+import { Alert } from "@mui/material";
 
 const RegisterPage = () => {
   const [inputsValue, setInputsValue] = useState({
@@ -32,6 +33,7 @@ const RegisterPage = () => {
     houseNumber: "",
     zip: "",
   });
+  const [errorsState, setErrorsState] = useState(null);
   const navigate = useNavigate();
   const handleInputsChange = (e) => {
     setInputsValue((currentState) => ({
@@ -42,8 +44,26 @@ const RegisterPage = () => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
+      const joiResponse = validateRegister({
+        first: inputsValue.first,
+        last: inputsValue.last,
+        phone: inputsValue.phone,
+        email: inputsValue.email,
+        password: inputsValue.password,
+        url: inputsValue.url,
+        alt: inputsValue.password,
+        state: inputsValue.password,
+        country: inputsValue.country,
+        city: inputsValue.city,
+        street: inputsValue.street,
+        houseNumber: inputsValue.houseNumber,
+        zip: inputsValue.zip,
+      });
+      setErrorsState(joiResponse);
+      if (joiResponse) return;
       const errors = validateRegister(inputsValue);
       if (errors) return;
+
       let request = normalizeData(inputsValue);
       const { data } = await axios.post("/users", request);
       toast("The registration was successful ", {
@@ -100,6 +120,9 @@ const RegisterPage = () => {
               value={inputsValue.first}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.first && (
+              <Alert severity="warning">{errorsState.first}</Alert>
+            )}
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
@@ -123,6 +146,9 @@ const RegisterPage = () => {
               value={inputsValue.last}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.last && (
+              <Alert severity="warning">{errorsState.last}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -135,6 +161,9 @@ const RegisterPage = () => {
               value={inputsValue.email}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.email && (
+              <Alert severity="warning">{errorsState.email}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -148,6 +177,9 @@ const RegisterPage = () => {
               value={inputsValue.password}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.password && (
+              <Alert severity="warning">{errorsState.password}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -160,6 +192,9 @@ const RegisterPage = () => {
               value={inputsValue.phone}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.phone && (
+              <Alert severity="warning">{errorsState.phone}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -171,6 +206,9 @@ const RegisterPage = () => {
               value={inputsValue.url}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.url && (
+              <Alert severity="warning">{errorsState.url}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -182,6 +220,9 @@ const RegisterPage = () => {
               value={inputsValue.alt}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.alt && (
+              <Alert severity="warning">{errorsState.alt}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -193,6 +234,9 @@ const RegisterPage = () => {
               value={inputsValue.state}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.state && (
+              <Alert severity="warning">{errorsState.state}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -205,6 +249,9 @@ const RegisterPage = () => {
               value={inputsValue.country}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.country && (
+              <Alert severity="warning">{errorsState.country}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -217,6 +264,9 @@ const RegisterPage = () => {
               value={inputsValue.city}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.city && (
+              <Alert severity="warning">{errorsState.city}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -229,6 +279,9 @@ const RegisterPage = () => {
               value={inputsValue.street}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.street && (
+              <Alert severity="warning">{errorsState.street}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -241,6 +294,9 @@ const RegisterPage = () => {
               value={inputsValue.houseNumber}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.houseNumber && (
+              <Alert severity="warning">{errorsState.houseNumber}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -252,6 +308,9 @@ const RegisterPage = () => {
               value={inputsValue.zip}
               onChange={handleInputsChange}
             />
+            {errorsState && errorsState.zip && (
+              <Alert severity="warning">{errorsState.zip}</Alert>
+            )}
           </Grid>
           <Grid item xs={12}>
             <FormControlLabel

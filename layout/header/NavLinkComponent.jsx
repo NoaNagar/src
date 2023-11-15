@@ -1,14 +1,15 @@
 import { Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
-const NavLinkComponent = ({ to, children }) => {
+const NavLinkComponent = ({ to, children, className }) => {
   return (
-    <NavLink to={to} sx={{}}>
+    <NavLink to={to}>
       {({ isActive }) => (
         <Typography
           color={isActive ? "text.headerActive" : "text.headerColor"}
           sx={{ p: 2, underline: "none" }}
           variant="h6"
+          className={className}
         >
           {children}
         </Typography>

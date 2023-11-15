@@ -5,6 +5,7 @@ import {
   BottomNavigationAction,
   Box,
   Divider,
+  IconButton,
 } from "@mui/material";
 
 import HomeIcon from "@mui/icons-material/Home";
@@ -52,43 +53,37 @@ const FooterComponent = () => {
   return (
     <Fragment>
       <Divider></Divider>
-      <BottomNavigation
-        showLabels
+      <Box
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
+        sx={{
+          display: "flex",
+          width: "40vw",
+          justifyContent: "space-between",
+          ml: "30vw",
+        }}
       >
-        <BottomNavigationAction
-          onChange={locationIcon}
-          onClick={handleHomeIcon}
-          label="Home"
-          icon={<HomeIcon />}
-        />
+        <IconButton onChange={locationIcon} onClick={handleHomeIcon}>
+          <HomeIcon />
+        </IconButton>
 
-        <BottomNavigationAction
-          onChange={locationIcon}
-          onClick={handleInfoIcon}
-          label="Info"
-          icon={<InfoIcon />}
-        />
+        <IconButton onChange={locationIcon} onClick={handleInfoIcon}>
+          <InfoIcon />
+        </IconButton>
+
         {loggedIn && (
-          <BottomNavigationAction
-            onChange={locationIcon}
-            onClick={handleFavIcon}
-            label="Favorite"
-            icon={<FavoriteIcon />}
-          />
+          <IconButton onChange={locationIcon} onClick={handleFavIcon}>
+            <FavoriteIcon />
+          </IconButton>
         )}
         {loggedIn && (
-          <BottomNavigationAction
-            onChange={locationIcon}
-            onClick={handleLogOutIcon}
-            label="Log out"
-            icon={<LogoutIcon />}
-          />
+          <IconButton onChange={locationIcon} onClick={handleLogOutIcon}>
+            <LogoutIcon />
+          </IconButton>
         )}
-      </BottomNavigation>
+      </Box>
       <CopyrightComponent sx={{ mt: 5 }} />
     </Fragment>
   );

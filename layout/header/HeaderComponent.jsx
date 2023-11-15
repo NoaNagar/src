@@ -7,16 +7,17 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { Avatar, Switch } from "@mui/material";
+import { Avatar, Switch, Typography } from "@mui/material";
 import Links from "./ui/Links";
 import LeftDrawerComponent from "./ui/LeftDrawerComponent";
 import { useState } from "react";
 import FilterComponent from "./ui/FilterComponent";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { darkThemeActions } from "../../store/darkThemeSlice";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -25,6 +26,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const loggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
+  const dispatch = useDispatch();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,8 +41,8 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const handleThemeChange = (event) => {
-    onThemeChange(event.target.checked);
+  const handleThemeToggle = () => {
+    dispatch(darkThemeActions.setThemePreference(!isDarkTheme));
   };
   const handleOpenDrawerClick = () => {
     setIsOpen(true);
@@ -128,10 +130,14 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           <Links />
           <FilterComponent />
           <Box sx={{ my: 2, p: 1 }}>
-            {/* <Typography sx={{ display: { xs: "none", md: "inline" } }}>
-              {isDarkTheme ? "Dark" : "Light"} Mode
-            </Typography> */}
-            <Switch checked={isDarkTheme} onChange={handleThemeChange} />
+            <Box sx={{ display: { xs: "none", md: "inline" } }}>
+              {isDarkTheme ? <DarkModeIcon /> : <LightModeIcon />}
+            </Box>
+            <Switch
+              checked={isDarkTheme}
+              onChange={handleThemeToggle}
+              sx={{ mt: -2 }}
+            />
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

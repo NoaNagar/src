@@ -11,7 +11,9 @@ const alwaysLinks = [
   { to: ROUTES.ABOUT, children: "about page" },
 ];
 
-const loggedInLinks = [{ to: ROUTES.FAV, children: "favorite page" }];
+const loggedInLinks = [
+  { to: ROUTES.FAV, children: "favorite page", className: "favLink" },
+];
 
 const businessInLinks = [
   { to: "/mycards", children: "My cards" },

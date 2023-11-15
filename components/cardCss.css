@@ -1,3 +1,12 @@
 .phoneIcon:hover:hover {
   color: #74d175;
 }
+.editIcon:hover:hover {
+  color: #ffd700;
+}
+.deleteIcon:hover:hover {
+  color: #000;
+}
+.favIcon:hover:hover {
+  color: #c00;
+}

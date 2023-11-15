@@ -20,7 +20,6 @@ const likedCardsSlice = createSlice({
         like,
         cardNumber,
       } = action.payload;
-
       const existingCardIndex = state.likedCards.findIndex(
         (card) => card._id === _id
       );

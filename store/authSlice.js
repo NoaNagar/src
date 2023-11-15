@@ -5,6 +5,7 @@ const initialState = {
   userData: undefined,
   isBuisness: false,
   isAdmin: false,
+  user: {},
 };
 
 const authSlice = createSlice({
@@ -20,6 +21,9 @@ const authSlice = createSlice({
     },
     logout(state) {
       state.loggedIn = false;
+    },
+    loginUser(state, action) {
+      state.user = action.payload;
     },
   },
 });

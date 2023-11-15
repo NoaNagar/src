@@ -15,6 +15,7 @@ import FavPageComponent from "../pages/FavPage/FavPageComponent";
 import MyCardsPage from "../pages/myCards/MyCardsPage";
 import MyProrifile from "../pages/MyProfile/MyProrifile";
 import EditProfile from "../pages/MyProfile/EditProfile";
+import SandboxPage from "../pages/Sandbox/SandboxPage";
 
 const Router = () => {
   return (
@@ -23,21 +24,37 @@ const Router = () => {
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.ABOUT} element={<AboutPageComponent />} />
-      <Route path={ROUTES.CREATECARD} element={<CreateCardPage />} />
-      <Route path={`${ROUTES.EDITCARD}/:id`} element={<EditCardPage />} />
-      <Route path={ROUTES.FAV} element={<FavPageComponent />} />
       <Route path={ROUTES.MYCARDS} element={<MyCardsPage />} />
       <Route path={ROUTES.PROFILE} element={<MyProrifile />} />
       <Route path={ROUTES.EDITPROFILE} element={<EditProfile />} />
+
+      <Route path={ROUTES.SANDBOX} element={<SandboxPage />} />
 
       <Route
         path={ROUTES.CREATECARD}
         element={
           <AuthGuard>
             <BizGuard>
-              {/* <CreateCardPage /> */}
-              <Route />
+              <CreateCardPage />
             </BizGuard>
+          </AuthGuard>
+        }
+      />
+      <Route
+        path={`${ROUTES.EDITCARD}/:id`}
+        element={
+          <AuthGuard>
+            <BizGuard>
+              <EditCardPage />
+            </BizGuard>
+          </AuthGuard>
+        }
+      />
+      <Route
+        path={ROUTES.FAV}
+        element={
+          <AuthGuard>
+            <FavPageComponent />
           </AuthGuard>
         }
       />

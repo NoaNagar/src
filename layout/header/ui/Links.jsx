@@ -15,13 +15,17 @@ const Links = () => {
   return (
     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
       {alwaysLinks.map((myItem) => (
-        <NavLinkComponent to={myItem.to} key={nextKey()}>
+        <NavLinkComponent
+          className={myItem.className}
+          to={myItem.to}
+          key={nextKey()}
+        >
           {myItem.children}
         </NavLinkComponent>
       ))}
       {loggedIn &&
         loggedInLinks.map((myItem) => (
-          <NavLinkComponent to={myItem.to} key={nextKey()}>
+          <NavLinkComponent className="abc" to={myItem.to} key={nextKey()}>
             {myItem.children}
           </NavLinkComponent>
         ))}

@@ -54,6 +54,7 @@ const LoginPage = () => {
       });
       autoLogin(true);
       navigate(ROUTES.HOME);
+      window.location.reload();
     } catch (err) {
       toast.error(err.response.data, {
         position: "top-right",

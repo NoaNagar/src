@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { hover } from "@testing-library/user-event/dist/hover";
+import "./cardCss.css";
 const CardComponent = ({
   _id,
   title,
@@ -43,6 +44,7 @@ const CardComponent = ({
   const loggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
   const search = useLocation();
+  const [liked, setLiked] = useState(like);
 
   const toggleCard = () => {
     setIsOpen(!isOpen);
@@ -53,7 +55,6 @@ const CardComponent = ({
   const handleClickEditCard = () => {
     onEditCard(_id);
   };
-  const [liked, setLiked] = useState(like);
   const handleClickFavCard = () => {
     onFavCard(_id, liked);
     setLiked((prevLiked) => !prevLiked); // Toggle the liked state
@@ -151,36 +152,34 @@ const CardComponent = ({
           )}
         </Box>
         <Box display="flex" justifyContent="space-between" sx={{ mt: 2 }}>
-          <Box>
-            <IconButton className="phoneIcon" color={hover ? "#74d175" : ""}>
-              <PhoneIcon />
+          <IconButton className="phoneIcon">
+            <PhoneIcon />
+          </IconButton>
+          {search.pathname === "/mycards" && (
+            <IconButton onClick={handleClickEditCard} className="editIcon">
+              <CreateIcon />
             </IconButton>
-            {search.pathname === "/mycards" && (
-              <IconButton onClick={handleClickEditCard}>
-                <CreateIcon />
-              </IconButton>
-            )}
-          </Box>
-          <Box>
-            {search.pathname === "/mycards" && (
-              <IconButton onClick={handleDeleteCardClick}>
-                <DeleteIcon />
-              </IconButton>
-            )}
-            {isAdmin && (
-              <IconButton onClick={handleDeleteCardClick}>
-                <DeleteIcon />
-              </IconButton>
-            )}
-            {loggedIn && (
-              <IconButton
-                onClick={handleClickFavCard}
-                color={liked ? "favActive" : ""}
-              >
-                <FavoriteIcon />
-              </IconButton>
-            )}
-          </Box>
+          )}
+
+          {search.pathname === "/mycards" && (
+            <IconButton onClick={handleDeleteCardClick} className="deleteIcon">
+              <DeleteIcon />
+            </IconButton>
+          )}
+          {isAdmin && (
+            <IconButton onClick={handleDeleteCardClick} className="deleteIcon">
+              <DeleteIcon />
+            </IconButton>
+          )}
+          {loggedIn && (
+            <IconButton
+              onClick={handleClickFavCard}
+              className="favIcon"
+              color={liked ? "favActive" : ""}
+            >
+              <FavoriteIcon />
+            </IconButton>
+          )}
         </Box>
       </CardContent>
       <Button
@@ -201,7 +200,7 @@ CardComponent.propTypes = {
   address: PropTypes.string,
   img: PropTypes.string,
   alt: PropTypes.string,
-  like: PropTypes.bool,
+  // like: PropTypes.bool,
   cardNumber: PropTypes.number,
   onDeleteCard: PropTypes.func.isRequired,
   onEditCard: PropTypes.func.isRequired,

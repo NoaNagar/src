@@ -70,7 +70,7 @@ const MyCardsPage = () => {
 
   return (
     <Container>
-      <Grid sx={{ mt: 10 }} container spacing={2}>
+      <Grid sx={{ mt: 10, mb: 2 }} container spacing={2}>
         {dataFromServer.map((card) => (
           <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
             <CardComponent

@@ -9,5 +9,6 @@ const ROUTES = {
   MYCARDS: "/mycards",
   PROFILE: "/myprofile",
   EDITPROFILE: "/editprofile",
+  SANDBOX: "/sandbox",
 };
 export default ROUTES;

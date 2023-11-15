@@ -10,18 +10,15 @@ import useQueryParams from "../../hooks/useQueryParams";
 import { toast } from "react-toastify";
 import { addLikedCard } from "../../store/likedCards";
 import { getToken } from "../../service/storageService";
-// import CircularIndeterminate from "../../components/loading";
 
 let initialDataFromServer = [];
 
 const FavPageComponent = () => {
-  const navigate = useNavigate();
-  const query = useQueryParams();
-  const dispatch = useDispatch();
-  let token = getToken();
-
+  const token = getToken();
   const [dataFromServer, setDataFromServer] = useState([]);
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
@@ -31,26 +28,90 @@ const FavPageComponent = () => {
         setDataFromServer(data.filter((card) => card.likes === true));
       })
       .catch((err) => {
-        toast.error(err.response.data, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
+        console.error("Error fetching favorite cards:", err);
+        toast.error("Looks like there is a problem with the server...");
+      });
+  }, [userData]);
+
+  const handleClickFavCard = async (_id, like) => {
+    try {
+      setDataFromServer((prevData) => {
+        return prevData.map((card) => {
+          if (card._id === _id) {
+            return {
+              ...card,
+              likes: !like,
+            };
+          }
+          return card;
         });
       });
-  }, []);
 
-  useEffect(() => {
-    if (!initialDataFromServer.length) return;
-    const filter = query.filter ? query.filter : "";
-    setDataFromServer(
-      initialDataFromServer.filter((card) => card.title.startsWith(filter))
-    );
-  }, [query, initialDataFromServer]);
+      const response = await axios.patch(
+        `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${_id}`,
+        {
+          like: !like,
+        },
+        {
+          headers: {
+            "x-auth-token": `${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        throw new Error("Failed to update like status");
+      }
+
+      const likedCardsResponse = await axios.get("/cards");
+      if (userData) {
+        likedCardsResponse.data = homePageNormalization(
+          likedCardsResponse.data,
+          userData._id
+        );
+      }
+
+      setDataFromServer(
+        likedCardsResponse.data.filter((card) => card.likes === true)
+      );
+    } catch (error) {
+      console.error("Error updating like status:", error);
+    }
+  };
+
+  const handleEditCard = (_id) => {
+    navigate(`${ROUTES.EDITCARD}/${_id}`);
+  };
+  const handleFavIcon = async (_id, like) => {
+    try {
+      const response = await axios.patch(
+        `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${_id}`,
+        {
+          like: !like,
+        },
+        {
+          headers: {
+            "x-auth-token": `${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        dispatch(addLikedCard({ _id, like: !like }));
+      }
+    } catch (err) {
+      toast.error(err.response.data, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
 
   const handleDeleteCard = async (_id) => {
     try {
@@ -73,34 +134,9 @@ const FavPageComponent = () => {
       });
     }
   };
-  const handleEditCard = (_id) => {
-    navigate(`${ROUTES.EDITCARD}/${_id}`);
-  };
-  const handleFavIcon = async (_id, like) => {
-    try {
-      const response = await axios.patch(
-        `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${_id}`,
-        {
-          like: !like,
-        },
-        {
-          headers: {
-            "x-auth-token": `${token}`,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        dispatch(addLikedCard({ _id, like: !like }));
-      }
-    } catch (error) {
-      console.error("Error updating like status:", error);
-    }
-  };
 
   return (
     <Container sx={{ mt: 12 }}>
-      {/* <CircularIndeterminate /> */}
       <Grid sx={{ mb: 2 }} container spacing={2}>
         {dataFromServer.map((card) => (
           <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
@@ -120,9 +156,9 @@ const FavPageComponent = () => {
               zip={card.address.zip}
               like={card.likes}
               cardNumber={card.cardNumber}
-              onDeleteCard={handleDeleteCard}
               onEditCard={handleEditCard}
-              onFavCard={handleFavIcon}
+              onFavCard={handleClickFavCard}
+              onDeleteCard={handleDeleteCard}
             />
           </Grid>
         ))}
