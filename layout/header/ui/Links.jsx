@@ -5,6 +5,7 @@ import myLinks, {
   loggedInLinks,
   businessInLinks,
   loggedOutLinks,
+  adminInLinks,
 } from "../../myLinks";
 import NavLinkComponent from "../NavLinkComponent";
 import { useSelector } from "react-redux";
@@ -12,6 +13,7 @@ import { useSelector } from "react-redux";
 const Links = () => {
   const loggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
   const isBuisness = useSelector((bigPie) => bigPie.authSlice.isBuisness);
+  const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
   return (
     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
       {alwaysLinks.map((myItem) => (
@@ -37,6 +39,12 @@ const Links = () => {
         ))}
       {isBuisness &&
         businessInLinks.map((myItem) => (
+          <NavLinkComponent to={myItem.to} key={nextKey()}>
+            {myItem.children}
+          </NavLinkComponent>
+        ))}
+      {isAdmin &&
+        adminInLinks.map((myItem) => (
           <NavLinkComponent to={myItem.to} key={nextKey()}>
             {myItem.children}
           </NavLinkComponent>

@@ -46,7 +46,7 @@ const EditProfile = () => {
         });
       })
       .catch((err) => {
-        toast.error(err, {
+        toast.error(err.response.data, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

@@ -20,10 +20,22 @@ const businessInLinks = [
   { to: ROUTES.CREATECARD, children: "Create card" },
 ];
 
+const adminInLinks = [
+  { to: "/mycards", children: "My cards" },
+  { to: ROUTES.CREATECARD, children: "Create card" },
+  { to: ROUTES.SANDBOX, children: "Sand Box" },
+];
+
 const loggedOutLinks = [
   { to: ROUTES.REGISTER, children: "Register page" },
   { to: ROUTES.LOGIN, children: "Login page" },
 ];
 
 export default myLinks;
-export { alwaysLinks, loggedInLinks, businessInLinks, loggedOutLinks };
+export {
+  alwaysLinks,
+  loggedInLinks,
+  businessInLinks,
+  loggedOutLinks,
+  adminInLinks,
+};

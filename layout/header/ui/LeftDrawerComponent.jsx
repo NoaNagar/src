@@ -13,12 +13,14 @@ import myLinks, {
   loggedInLinks,
   businessInLinks,
   loggedOutLinks,
+  adminInLinks,
 } from "../../myLinks";
 import { Link } from "react-router-dom";
 
 const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
   const loggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
   const isBuisness = useSelector((bigPie) => bigPie.authSlice.isBuisness);
+  const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
   const list = () => (
     <Box
       sx={{
@@ -79,6 +81,22 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
           ))}
         {isBuisness &&
           businessInLinks.map((myItem, index) => (
+            <Box key={index}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <Link to={myItem.to}>
+                    <ListItemText
+                      primary={myItem.children}
+                      sx={{ pl: 2, pr: 2 }}
+                    />
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+            </Box>
+          ))}
+        {isAdmin &&
+          adminInLinks.map((myItem, index) => (
             <Box key={index}>
               <ListItem disablePadding>
                 <ListItemButton>

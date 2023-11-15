@@ -27,7 +27,6 @@ const MyProrifile = () => {
         });
       });
   }, []);
-
   return (
     <Container sx={{ mt: 12 }}>
       <Typography variant="h2" noWrap component="div">
