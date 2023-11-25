@@ -16,6 +16,7 @@ import myLinks, {
   adminInLinks,
 } from "../../myLinks";
 import { Link } from "react-router-dom";
+import NavLinkComponent from "../NavLinkComponent";
 
 const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
   const loggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
@@ -34,80 +35,45 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
       <List>
         {alwaysLinks.map((myItem, index) => (
           <Box key={index}>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <Link to={myItem.to}>
-                  <ListItemText
-                    primary={myItem.children}
-                    sx={{ pl: 2, pr: 2 }}
-                  />
-                </Link>
-              </ListItemButton>
-            </ListItem>
+            <NavLinkComponent className={"linkLeft"} to={myItem.to}>
+              {myItem.children}
+            </NavLinkComponent>
             <Divider />
           </Box>
         ))}
         {loggedIn &&
           loggedInLinks.map((myItem, index) => (
             <Box key={index}>
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <Link to={myItem.to}>
-                    <ListItemText
-                      primary={myItem.children}
-                      sx={{ pl: 2, pr: 2 }}
-                    />
-                  </Link>
-                </ListItemButton>
-              </ListItem>
+              <NavLinkComponent className={"linkLeft"} to={myItem.to}>
+                {myItem.children}
+              </NavLinkComponent>
               <Divider />
             </Box>
           ))}
         {!loggedIn &&
           loggedOutLinks.map((myItem, index) => (
             <Box key={index}>
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <Link to={myItem.to}>
-                    <ListItemText
-                      primary={myItem.children}
-                      sx={{ pl: 2, pr: 2 }}
-                    />
-                  </Link>
-                </ListItemButton>
-              </ListItem>
+              <NavLinkComponent className={"linkLeft"} to={myItem.to}>
+                {myItem.children}
+              </NavLinkComponent>
               <Divider />
             </Box>
           ))}
         {isBuisness &&
           businessInLinks.map((myItem, index) => (
             <Box key={index}>
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <Link to={myItem.to}>
-                    <ListItemText
-                      primary={myItem.children}
-                      sx={{ pl: 2, pr: 2 }}
-                    />
-                  </Link>
-                </ListItemButton>
-              </ListItem>
+              <NavLinkComponent className={"linkLeft"} to={myItem.to}>
+                {myItem.children}
+              </NavLinkComponent>
               <Divider />
             </Box>
           ))}
         {isAdmin &&
           adminInLinks.map((myItem, index) => (
             <Box key={index}>
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <Link to={myItem.to}>
-                    <ListItemText
-                      primary={myItem.children}
-                      sx={{ pl: 2, pr: 2 }}
-                    />
-                  </Link>
-                </ListItemButton>
-              </ListItem>
+              <NavLinkComponent className={"linkLeft"} to={myItem.to}>
+                {myItem.children}
+              </NavLinkComponent>
               <Divider />
             </Box>
           ))}

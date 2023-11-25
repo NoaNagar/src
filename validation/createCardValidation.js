@@ -4,7 +4,7 @@ import validation from "./validation";
 const createSchema = Joi.object({
   title: Joi.string().min(2).max(256).required(),
   subTitle: Joi.string().min(2).max(256).required(),
-  decoration: Joi.string().min(2).max(1024).required(),
+  description: Joi.string().min(2).max(1024).required(),
   phone: Joi.string()
     .min(9)
     .max(11)
@@ -20,6 +20,7 @@ const createSchema = Joi.object({
   state: Joi.string(),
   country: Joi.string().required(),
   city: Joi.string().required(),
+  street: Joi.string().required(),
   houseNumber: Joi.string().required(),
   zip: Joi.string().required(),
 });

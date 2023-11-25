@@ -13,6 +13,8 @@ import { toast } from "react-toastify";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "../../components/cardCss.css";
+import { Avatar } from "@mui/material";
+import Pagination from "@mui/material/Pagination";
 
 const SandboxPage = () => {
   const [userFromServer, setUserFromServer] = useState([]);
@@ -72,16 +74,17 @@ const SandboxPage = () => {
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
               >
-                <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                <Avatar alt="profile" src={item?.image?.url} sx={{ mr: 2 }} />
+                <Typography sx={{ width: "33%", flexShrink: 0, mt: 1 }}>
                   {`${item.name.first} ${item.name.middle} ${item.name.last}`}
                 </Typography>
                 {item.isAdmin && (
-                  <Typography sx={{ color: "text.secondary", mr: 1 }}>
+                  <Typography sx={{ color: "text.secondary", mr: 1, mt: 1 }}>
                     Admin
                   </Typography>
                 )}
                 {item.isBusiness && (
-                  <Typography sx={{ color: "text.secondary" }}>
+                  <Typography sx={{ color: "text.secondary", mt: 1 }}>
                     Business acount{" "}
                   </Typography>
                 )}
@@ -90,36 +93,36 @@ const SandboxPage = () => {
                 <Box sx={{ display: "flex" }}>
                   <Typography
                     variant="body1"
-                    sx={{ fontWeight: 700, variant: "subtitle1" }}
+                    sx={{ fontWeight: 700, variant: "subtitle1", mb: 1 }}
                   >{`phone:  `}</Typography>
                   <Typography variant="body1">{item.phone}</Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>
                   <Typography
                     variant="body1"
-                    sx={{ fontWeight: 700, variant: "subtitle1" }}
+                    sx={{ fontWeight: 700, variant: "subtitle1", mb: 1 }}
                   >{`email: `}</Typography>
                   <Typography>{item.email}</Typography>
                 </Box>
                 <Typography
                   variant="body1"
-                  sx={{ fontWeight: 700, variant: "subtitle1" }}
+                  sx={{ fontWeight: 700, variant: "subtitle1", mb: 1 }}
                 >{`address: `}</Typography>
                 <Typography variant="body1">{item.address.country} </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ mb: 1 }}>
                   {`${item.address.city}, ${item.address.street}, ${item.address.hoseNumber}`}
                 </Typography>
                 <Box sx={{ display: "flex" }}>
                   <Typography
                     variant="body1"
-                    sx={{ fontWeight: 700, variant: "subtitle1" }}
+                    sx={{ fontWeight: 700, variant: "subtitle1", mb: 1 }}
                   >{`state: `}</Typography>
                   <Typography>{item.address.state}</Typography>
                 </Box>
                 <Box sx={{ display: "flex" }}>
                   <Typography
                     variant="body1"
-                    sx={{ fontWeight: 700, variant: "subtitle1" }}
+                    sx={{ fontWeight: 700, variant: "subtitle1", mb: 1 }}
                   >{`zip: `}</Typography>
                   <Typography>{item.address.zip}</Typography>
                 </Box>
@@ -134,6 +137,7 @@ const SandboxPage = () => {
             </Accordion>{" "}
           </Grid>
         ))}
+        <Pagination count={10} variant="outlined" sx={{ m: 2 }} />
       </Grid>
     </Fragment>
   );

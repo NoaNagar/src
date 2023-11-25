@@ -1,6 +1,31 @@
-.links {
+.link,
+.homePage,
+.registerPage,
+.loginPage,
+.favoritePage,
+.aboutPage,
+.createCard,
+.sandBox {
   text-decoration: none !important;
 }
 
-.favLink {
+@media (max-width: 1320px) {
+  .sandBox {
+    display: none;
+  }
+}
+@media (max-width: 1200px) {
+  .createCard {
+    display: none;
+  }
+}
+@media (max-width: 1085px) {
+  .myCards {
+    display: none;
+  }
+}
+@media (max-width: 955px) {
+  .favoritePage {
+    display: none;
+  }
 }

@@ -62,7 +62,8 @@ const FooterComponent = () => {
           display: "flex",
           width: "40vw",
           justifyContent: "space-between",
-          ml: "30vw",
+          mr: "auto",
+          ml: "auto",
         }}
       >
         <IconButton onChange={locationIcon} onClick={handleHomeIcon}>

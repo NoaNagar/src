@@ -101,15 +101,15 @@ const CreateCardPage = () => {
     }
   };
   return (
-    <Container sx={{ padding: "65px" }}>
-      <Typography variant="h2" sx={{ mb: 1, padding: "10px", pb: "0px" }}>
+    <Container sx={{ mt: 12 }}>
+      <Typography variant="h3" sx={{ mb: 1, padding: "10px", pb: "0px" }}>
         Create Card{" "}
       </Typography>
       <Typography variant="body1" sx={{ mb: 1, padding: "3px", ml: "7px" }}>
         Put a new values in the correct input
       </Typography>
       <Divider sx={{ mb: 3 }} />
-      <Grid container flexDirection={"column"}>
+      <Grid container flexDirection={"column"} sx={{ width: "60vw" }}>
         <TextField
           id="title"
           label="Title"
@@ -166,9 +166,6 @@ const CreateCardPage = () => {
           onChange={handleInputChange}
           value={inputsValue.web}
         />
-        {errorsState && errorsState.web && (
-          <Alert severity="warning">{errorsState.web}</Alert>
-        )}
         <TextField
           id="mail"
           label="Email"
@@ -189,9 +186,6 @@ const CreateCardPage = () => {
           onChange={handleInputChange}
           value={inputsValue.url}
         />
-        {errorsState && errorsState.url && (
-          <Alert severity="warning">{errorsState.url}</Alert>
-        )}
         <TextField
           id="alt"
           label="Alt"
@@ -200,9 +194,6 @@ const CreateCardPage = () => {
           onChange={handleInputChange}
           value={inputsValue.alt}
         />
-        {errorsState && errorsState.alt && (
-          <Alert severity="warning">{errorsState.alt}</Alert>
-        )}
         <TextField
           id="state"
           label="State"
@@ -211,9 +202,6 @@ const CreateCardPage = () => {
           onChange={handleInputChange}
           value={inputsValue.state}
         />
-        {errorsState && errorsState.state && (
-          <Alert severity="warning">{errorsState.state}</Alert>
-        )}
         <TextField
           id="country"
           label="Country"
@@ -270,14 +258,17 @@ const CreateCardPage = () => {
           onChange={handleInputChange}
           value={inputsValue.zip}
         />
-        {errorsState && errorsState.zip && (
-          <Alert severity="warning">{errorsState.zip}</Alert>
-        )}
       </Grid>
-
       <Button
         variant="outlined"
-        sx={{ mt: 2, width: "100%", ml: "0%", bgcolor: "lightskyblue" }}
+        sx={{
+          mt: 2,
+          mb: 2,
+          width: "100%",
+          ml: "0%",
+          bgcolor: "lightskyblue",
+          color: "white",
+        }}
         onClick={handleUpdateChangesClick}
       >
         Create

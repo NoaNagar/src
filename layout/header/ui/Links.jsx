@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import nextKey from "generate-my-key";
-import myLinks, {
+import {
   alwaysLinks,
   loggedInLinks,
   businessInLinks,
@@ -27,25 +27,41 @@ const Links = () => {
       ))}
       {loggedIn &&
         loggedInLinks.map((myItem) => (
-          <NavLinkComponent className="abc" to={myItem.to} key={nextKey()}>
+          <NavLinkComponent
+            className={myItem.className}
+            to={myItem.to}
+            key={nextKey()}
+          >
             {myItem.children}
           </NavLinkComponent>
         ))}
       {!loggedIn &&
         loggedOutLinks.map((myItem) => (
-          <NavLinkComponent to={myItem.to} key={nextKey()}>
+          <NavLinkComponent
+            className={myItem.className}
+            to={myItem.to}
+            key={nextKey()}
+          >
             {myItem.children}
           </NavLinkComponent>
         ))}
       {isBuisness &&
         businessInLinks.map((myItem) => (
-          <NavLinkComponent to={myItem.to} key={nextKey()}>
+          <NavLinkComponent
+            className={myItem.className}
+            to={myItem.to}
+            key={nextKey()}
+          >
             {myItem.children}
           </NavLinkComponent>
         ))}
       {isAdmin &&
         adminInLinks.map((myItem) => (
-          <NavLinkComponent to={myItem.to} key={nextKey()}>
+          <NavLinkComponent
+            className={myItem.className}
+            to={myItem.to}
+            key={nextKey()}
+          >
             {myItem.children}
           </NavLinkComponent>
         ))}

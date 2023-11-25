@@ -6,10 +6,10 @@ import RegisterPage from "../pages/register/RegisterPage";
 import Error404Page from "../pages/404/Error404Page";
 import LoginPage from "../pages/login/LoginPage";
 import EditCardPage from "../pages/EditCardPage/EditCardPage";
-
 import CreateCardPage from "../pages/CreateCardPage/CreateCardPage";
 import AuthGuard from "../Guard/AuthGuard";
 import BizGuard from "../Guard/BizGuard";
+import AdminGuard from "../Guard/BizGuard";
 import AboutPageComponent from "../pages/aboutPage/AboutPageComponent";
 import FavPageComponent from "../pages/FavPage/FavPageComponent";
 import MyCardsPage from "../pages/myCards/MyCardsPage";
@@ -27,8 +27,6 @@ const Router = () => {
       <Route path={ROUTES.MYCARDS} element={<MyCardsPage />} />
       <Route path={ROUTES.PROFILE} element={<MyProrifile />} />
       <Route path={ROUTES.EDITPROFILE} element={<EditProfile />} />
-
-      <Route path={ROUTES.SANDBOX} element={<SandboxPage />} />
 
       <Route
         path={ROUTES.CREATECARD}
@@ -50,6 +48,17 @@ const Router = () => {
           </AuthGuard>
         }
       />
+      <Route
+        path={ROUTES.SANDBOX}
+        element={
+          <AuthGuard>
+            <AdminGuard>
+              <SandboxPage />
+            </AdminGuard>
+          </AuthGuard>
+        }
+      />
+
       <Route
         path={ROUTES.FAV}
         element={

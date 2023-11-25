@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Container, Grid } from "@mui/material";
 import CardComponent from "../../components/CardComponent";
 import { useNavigate } from "react-router-dom";
@@ -46,13 +46,12 @@ const HomePage = () => {
         });
       });
   }, []);
-  useEffect(() => {
-    if (!initialDataFromServer.length) return;
+
+  const filteredCards = useMemo(() => {
+    if (!dataFromServer.length) return [];
     const filter = query.filter ? query.filter : "";
-    setDataFromServer(
-      initialDataFromServer.filter((card) => card.title.startsWith(filter))
-    );
-  }, [query, initialDataFromServer]);
+    return dataFromServer.filter((card) => card.title.startsWith(filter));
+  }, [query, dataFromServer]);
 
   const handleDeleteCard = async (_id) => {
     try {
@@ -94,9 +93,7 @@ const HomePage = () => {
       if (response.data.success) {
         dispatch(addLikedCard({ _id, like: !like }));
       }
-    } catch (error) {
-      console.error("Error updating like status:", error);
-    }
+    } catch (error) {}
   };
 
   const fetchMoreData = () => {
@@ -129,7 +126,7 @@ const HomePage = () => {
         loader={visibleLoader && <h4>Loading...</h4>} // Only show loader if visibleLoader is true
       >
         <Grid sx={{ mb: 2 }} container spacing={2}>
-          {visibleCards.map((card) => (
+          {filteredCards.map((card) => (
             <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
               <CardComponent
                 _id={card._id}

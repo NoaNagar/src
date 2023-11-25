@@ -42,6 +42,9 @@ const LoginPage = () => {
         password: passwordValue,
       });
       storeToken(data, rememberMe);
+      autoLogin(true);
+      navigate(ROUTES.HOME);
+      window.location.reload();
       toast("You logged in successfully 👌", {
         position: "top-right",
         autoClose: 5000,
@@ -52,9 +55,6 @@ const LoginPage = () => {
         progress: undefined,
         theme: "light",
       });
-      autoLogin(true);
-      navigate(ROUTES.HOME);
-      window.location.reload();
     } catch (err) {
       toast.error(err.response.data, {
         position: "top-right",

@@ -3,6 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { Avatar } from "@mui/material";
+import { alt } from "joi";
 
 const MyProrifile = () => {
   const [userFromServer, setUserFromServer] = useState({});
@@ -29,10 +31,12 @@ const MyProrifile = () => {
   }, []);
   return (
     <Container sx={{ mt: 12 }}>
-      <Typography variant="h2" noWrap component="div">
-        My Profile
-      </Typography>
-      <Box sx={{ mt: 2 }}>
+      <Avatar
+        alt={userFromServer?.image?.alt}
+        src={userFromServer?.image?.url}
+        sx={{ width: 70, height: 70 }}
+      />{" "}
+      <Box sx={{ mt: 2, ml: 1 }}>
         <Typography variant="h5">
           First name: {`${userFromServer?.name?.first}`}
         </Typography>
@@ -64,7 +68,9 @@ const MyProrifile = () => {
           Zip: {userFromServer?.address?.zip}
         </Typography>
       </Box>
-      <Button href="/editprofile">Edit Profile</Button>
+      <Button href="/editprofile" sx={{ p: 1.5, mt: 4, mb: 2 }}>
+        Edit Profile
+      </Button>
     </Container>
   );
 };
