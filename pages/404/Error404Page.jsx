@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography, Img } from "@mui/material";
 import Grid from "@mui/material/Grid";
 //created by Anna
 const Error404Page = () => {
@@ -13,21 +13,16 @@ const Error404Page = () => {
     >
       <Container maxWidth="md">
         <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Typography variant="h1">404</Typography>
-            <Typography variant="h6">
-              The page you’re looking for doesn’t exist.
-            </Typography>
-            <Button variant="contained">Back Home</Button>
-          </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <img
-              src="https://cdn.pixabay.com/photo/2017/03/09/12/31/error-2129569__340.jpg"
-              alt=""
-              width={500}
-              height={250}
+              src="https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?size=626&ext=jpg&ga=GA1.1.433117207.1684238192&semt=sph"
+              alt="404"
             />
           </Grid>
+          <Grid item xs={12}></Grid>
+          <Button variant="outlined" href="/" sx={{ ml: 2 }}>
+            Back Home
+          </Button>
         </Grid>
       </Container>
     </Box>

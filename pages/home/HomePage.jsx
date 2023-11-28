@@ -33,25 +33,18 @@ const HomePage = () => {
         setDataFromServer(data);
         setVisibleCards(data.slice(0, cardsPerPage));
       })
-      .catch((err) => {
-        toast.error(err.response, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      });
+      .catch((err) => {});
   }, []);
 
-  const filteredCards = useMemo(() => {
-    if (!dataFromServer.length) return [];
+  useEffect(() => {
+    if (!initialDataFromServer.length) return;
     const filter = query.filter ? query.filter : "";
-    return dataFromServer.filter((card) => card.title.startsWith(filter));
-  }, [query, dataFromServer]);
+    const filteredData = initialDataFromServer.filter((card) =>
+      card.title.toLowerCase().includes(filter.toLowerCase())
+    );
+    setDataFromServer(filteredData);
+    setVisibleCards(filteredData.slice(0, cardsPerPage));
+  }, [query]);
 
   const handleDeleteCard = async (_id) => {
     try {
@@ -97,16 +90,13 @@ const HomePage = () => {
   };
 
   const fetchMoreData = () => {
-    // Show the loader text after a delay of 0.5 seconds
     setTimeout(() => {
       setVisibleLoader(true);
     }, 1000);
 
-    // Fetch more data from the server and append it to visibleCards
     const startIndex = visibleCards.length;
     const endIndex = startIndex + cardsPerPage;
 
-    // Simulate fetching data with a delay of 2 seconds (adjust as needed)
     setTimeout(() => {
       const newVisibleCards = dataFromServer.slice(startIndex, endIndex);
       setVisibleCards((prevVisibleCards) => [
@@ -114,7 +104,7 @@ const HomePage = () => {
         ...newVisibleCards,
       ]);
       setVisibleLoader(false);
-    }, 0); // Adjust the delay as needed
+    }, 0);
   };
 
   return (
@@ -126,7 +116,7 @@ const HomePage = () => {
         loader={visibleLoader && <h4>Loading...</h4>} // Only show loader if visibleLoader is true
       >
         <Grid sx={{ mb: 2 }} container spacing={2}>
-          {filteredCards.map((card) => (
+          {visibleCards.map((card) => (
             <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
               <CardComponent
                 _id={card._id}

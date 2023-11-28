@@ -8,11 +8,11 @@ const myLinks = [
 
 const alwaysLinks = [
   { to: ROUTES.HOME, children: "Home page", className: "homePage" },
-  { to: ROUTES.ABOUT, children: "about page", className: "aboutPage" },
+  { to: ROUTES.ABOUT, children: "About page", className: "aboutPage" },
 ];
 
 const loggedInLinks = [
-  { to: ROUTES.FAV, children: "favorite page", className: "favoritePage" },
+  { to: ROUTES.FAV, children: "Favorite page", className: "favoritePage" },
 ];
 
 const businessInLinks = [

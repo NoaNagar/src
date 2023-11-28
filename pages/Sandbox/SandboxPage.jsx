@@ -14,7 +14,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "../../components/cardCss.css";
 import { Avatar } from "@mui/material";
-import Pagination from "@mui/material/Pagination";
 
 const SandboxPage = () => {
   const [userFromServer, setUserFromServer] = useState([]);
@@ -24,18 +23,7 @@ const SandboxPage = () => {
       .then(({ data }) => {
         setUserFromServer(data);
       })
-      .catch((err) => {
-        toast.error(err.response.data, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      });
+      .catch((err) => {});
   }, []);
 
   // const handleDeleteCard = async (_id) => {
@@ -137,7 +125,6 @@ const SandboxPage = () => {
             </Accordion>{" "}
           </Grid>
         ))}
-        <Pagination count={10} variant="outlined" sx={{ m: 2 }} />
       </Grid>
     </Fragment>
   );

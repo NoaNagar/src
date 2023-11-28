@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const NavLinkComponent = ({ to, children, className }) => {
   return (
-    <NavLink to={to}>
+    <NavLink to={to} style={{ textDecoration: "none" }}>
       {({ isActive }) => (
         <Typography
           color={isActive ? "text.headerActive" : "text.headerColor"}

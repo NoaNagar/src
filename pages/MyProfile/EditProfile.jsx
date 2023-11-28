@@ -133,7 +133,7 @@ const EditProfile = () => {
         <Typography component="h1" variant="h5">
           Edit profile{" "}
         </Typography>
-        <Grid sx={{ width: "50vw" }}>
+        <Grid sx={{ width: "60vw" }}>
           <Box sx={{ mt: 1, display: "flex", flexDirection: "column" }}>
             <TextField
               sx={{ mt: 2 }}
@@ -253,7 +253,7 @@ const EditProfile = () => {
             onClick={handleSubmit}
             fullWidth
           >
-            APDATE
+            UPDATE
           </Button>
         </Grid>
       </Box>

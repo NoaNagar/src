@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { Avatar } from "@mui/material";
 import { alt } from "joi";
+import { SafetyDivider } from "@mui/icons-material";
+import { Divider } from "@mui/material";
 
 const MyProrifile = () => {
   const [userFromServer, setUserFromServer] = useState({});
@@ -16,18 +18,7 @@ const MyProrifile = () => {
       .then(({ data }) => {
         setUserFromServer(data);
       })
-      .catch((err) => {
-        toast.error(err.response.data, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      });
+      .catch((err) => {});
   }, []);
   return (
     <Container sx={{ mt: 12 }}>
@@ -37,35 +28,34 @@ const MyProrifile = () => {
         sx={{ width: 70, height: 70 }}
       />{" "}
       <Box sx={{ mt: 2, ml: 1 }}>
-        <Typography variant="h5">
-          First name: {`${userFromServer?.name?.first}`}
+        <Divider textAlign="left">Personal Information</Divider>{" "}
+        <Typography variant="h5" sx={{ mt: 2 }}>
+          {userFromServer?.name?.first}
         </Typography>
-        <Typography variant="h5">
-          Middle name: {userFromServer?.name?.midlle}
+        <Typography variant="h5" sx={{ mt: 2 }}>
+          {userFromServer?.name?.midlle}
         </Typography>
-        <Typography variant="h5">
-          Last name: {userFromServer?.name?.last}
+        <Typography variant="h5" sx={{ mt: 2 }}>
+          {userFromServer?.name?.last}
         </Typography>
-        <Typography variant="h5">Pone: {userFromServer?.phone}</Typography>
-        <Typography variant="h5">Email: {userFromServer?.email}</Typography>
-        <Typography variant="h4">Address</Typography>
-        <Typography variant="h5">
-          Country: {userFromServer?.address?.country}
+        <Typography variant="h5" sx={{ mt: 2 }}>
+          {userFromServer?.phone}
         </Typography>
-        <Typography variant="h5">
-          City: {userFromServer?.address?.city}
+        <Typography variant="h5" sx={{ mt: 2, mb: 2 }}>
+          {userFromServer?.email}
         </Typography>
-        <Typography variant="h5">
-          State: {userFromServer?.name?.state}
+        <Divider textAlign="left">Address</Divider>{" "}
+        <Typography variant="h5" sx={{ mt: 2 }}>
+          {userFromServer?.name?.state}
         </Typography>
-        <Typography variant="h5">
-          Street: {userFromServer?.address?.street}
+        <Typography variant="h5" sx={{ mt: 2 }}>
+          {userFromServer?.address?.country}
         </Typography>
-        <Typography variant="h5">
-          House number: {userFromServer?.address?.houseNumber}
+        <Typography variant="h5" sx={{ mt: 2 }}>
+          {`${userFromServer?.address?.city}, ${userFromServer?.address?.street} ${userFromServer?.address?.houseNumber}`}
         </Typography>
-        <Typography variant="h5">
-          Zip: {userFromServer?.address?.zip}
+        <Typography variant="h5" sx={{ mt: 2 }}>
+          {userFromServer?.address?.zip}
         </Typography>
       </Box>
       <Button href="/editprofile" sx={{ p: 1.5, mt: 4, mb: 2 }}>

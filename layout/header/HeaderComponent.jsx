@@ -70,18 +70,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       .then(({ data }) => {
         setUserFromServer(data);
       })
-      .catch((err) => {
-        toast.error(err.response.data, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      });
+      .catch((err) => {});
   }, []);
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -152,14 +141,12 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           </IconButton>
           <Links />
           <FilterComponent />
-          <Box sx={{ my: 2, p: 1 }}>
-            <Box sx={{ display: { xs: "none", md: "inline" } }}>
-              {isDarkTheme ? <DarkModeIcon /> : <LightModeIcon />}
-            </Box>
+          <Box sx={{ my: 2, p: 1, display: "flex", flexDirection: "row" }}>
+            {isDarkTheme ? <DarkModeIcon /> : <LightModeIcon />}
             <Switch
               checked={isDarkTheme}
               onChange={handleThemeToggle}
-              sx={{ mt: -2 }}
+              sx={{ mt: -1 }}
             />
           </Box>
           <Box sx={{ flexGrow: 1 }} />
